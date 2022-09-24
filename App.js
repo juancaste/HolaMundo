@@ -2,32 +2,32 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Dimensions, TouchableWithoutFeedback, ScrollView } from 'react-native';
 
 export default function App() {
-  const [ text, setText ] = useState('Uno en el parcial')
-  const [ submit, setSubmit ] = useState('')
+  const [text, setText] = useState('Uno en el parcial')
+  const [submit, setSubmit] = useState('')
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text>Texto: { submit }</Text> 
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
-        <Text>Texto: { submit }</Text>
+        <Text>Texto: {submit}</Text> 
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
+        <Text>Texto: {submit}</Text>
         <TextInput style={ styles.input }
             placeholder='Write here'
-            onChange={ Texto => setText(Texto) }
-            defaultValue={ text }
+            onChangeText={Texto => setText(Texto) }
+            defaultValue={text}
         />
         <TouchableWithoutFeedback
-            underlayColor={ '#999' }
-            activeOpacity={ 0.2 }
+            underlayColor={'#999'}
+            activeOpacity={0.2}
             onPress={() => {
-              setSubmit(text)
-              alert('Mentiras, su nota es 5 .')
-            } }> <Text>Accept</Text>
+            setSubmit(text)
+            alert('Mentiras, su nota es 5 .')
+            }}><Text>Accept</Text>
         </TouchableWithoutFeedback>
       </ScrollView>
     </View>
