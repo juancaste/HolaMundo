@@ -1,41 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Dimensions, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Camera } from 'expo-camera';
 
 export default function App() {
-  const [text, setText] = useState('Uno en el parcial')
-  const [submit, setSubmit] = useState('')
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
+  useEffect(() => {
+    (async () => {
+      const  { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  } 
+
+  if (hasPermission === false) {
+    return <Text>Permiso denegado </Text>
+  } 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Text>Texto: {submit}</Text> 
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <Text>Texto: {submit}</Text>
-        <TextInput style={ styles.input }
-            placeholder='Write here'
-            onChangeText={Texto => setText(Texto) }
-            defaultValue={text}
-        />
-        <TouchableWithoutFeedback
-            underlayColor={'#999'}
-            activeOpacity={0.2}
+      <Camera style={styles.camera} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={styles.button}
             onPress={() => {
-            setSubmit(text)
-            alert('Mentiras, su nota es 5 .')
-            }}><Text>Accept</Text>
-        </TouchableWithoutFeedback>
-      </ScrollView>
+              setType(
+                type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+              );
+            }}>
+            <Text style={styles.text}>Girar</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    width: Dimensions.get('window').width,
+  container: {
+    flex: 1,
   },
+  camera: {
+    flex: 1,
+  }
 });
